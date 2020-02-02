@@ -1,11 +1,13 @@
 'use strict';
 
+
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
 var blockSetup = document.querySelector('.setup');
 var blockSetupOpen = document.querySelector('.setup-open');
 var blocksetupClose = document.querySelector('.setup-close');
+
 var blockSetuSimilar = document.querySelector('.setup-similar');
 var blockSetuSimilarList = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
@@ -31,6 +33,7 @@ var fireballColors = ['#ee4830',
 
 
 //  ---------- Показать блок ---------------
+
 
 var onBlockEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
@@ -89,6 +92,7 @@ mainfireball.addEventListener('click', function () {
   mainfireball.style.backgroundColor = fireballColors[makeRandomValue(fireballColors)];
   mainfireballInput.setAttribute('value', fireballColors[makeRandomValue(fireballColors)]);
 });
+
 
 // --------------- рандомное значение  ---------------------
 
