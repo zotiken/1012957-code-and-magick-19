@@ -1019,3 +1019,25 @@ input[type=radio]:checked + .review-mark-label
 
     opacity: 0;
 }
+.modal-error-massage
+{
+  z-index: 99;
+    box-sizing: border-box;
+    position: absolute;
+    width: 300px;
+    background-color: rgba(255, 255, 255,0.9);
+    box-shadow: 1px 1px 1px blue;
+    padding: 0 10px;
+    min-height: 31px;
+    left: 50%;
+    transition: top 5s;
+        top: 50%;
+    transform: translate(-50%,-50%);
+}
+.modal-error-massage p 
+{
+  text-align: center;
+  color: #ee4830;
+  text-transform: uppercase;
+}
+
