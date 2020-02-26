@@ -1,11 +1,9 @@
 'use strict';
 
-
 (function () {
   var wizards = [];
   var blockSetuSimilar = document.querySelector('.setup-similar');
   var blockSetuSimilarList = document.querySelector('.setup-similar-list');
-
   var colorCoat = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
   var colorEyes = ['black', 'red', 'blue', 'yellow', 'green'];
   var fireballColors = ['#ee4830',
@@ -45,7 +43,6 @@
     wizardElement.querySelector('.wizard-eyes').style.fill = arr.colorEyes;
     return wizardElement;
   };
-
   var onMainWizardCoat = window.debounce(function () {
     mainWizardCoat.style.fill = colorCoat[makeRandomValue(colorCoat)];
     update();
@@ -124,5 +121,4 @@
   };
 
   window.backend.load('https://js.dump.academy/code-and-magick/data', Load);
-
 })();
