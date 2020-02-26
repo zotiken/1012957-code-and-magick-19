@@ -1,12 +1,9 @@
 'use strict';
-(function () {
 
+(function () {
+  var wizards = [];
   var blockSetuSimilar = document.querySelector('.setup-similar');
   var blockSetuSimilarList = document.querySelector('.setup-similar-list');
-  // var wizards = [];
-
-  // var arrayNames = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  // var arraySurnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
   var colorCoat = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
   var colorEyes = ['black', 'red', 'blue', 'yellow', 'green'];
   var fireballColors = ['#ee4830',
@@ -30,24 +27,6 @@
     return Math.round(Math.random() * (array.length - 1));
   };
 
-  // ---
-
-  //  --------------- создание массива описания  персонажей -------------
-  // var wizardGeneretionCharacteristics = function (number) {
-  //   for (var i = 0; i < number; i++) {
-  //     wizards.push({
-  //       name: arrayNames[makeRandomValue(arrayNames)] + ' ' + arraySurnames[makeRandomValue(arraySurnames)],
-  //       coatColor: colorCoat[makeRandomValue(colorCoat)],
-  //       eyesColor: colorEyes[makeRandomValue(colorEyes)]
-  //     });
-  //   }
-  //   return wizards;
-  // };
-
-  // wizardGeneretionCharacteristics(4); --- вызов  генерации
-
-  // --
-
   // ========= копирование узла =============
 
 
@@ -64,29 +43,82 @@
     wizardElement.querySelector('.wizard-eyes').style.fill = arr.colorEyes;
     return wizardElement;
   };
-  //  ---------- конструирование блока  по данным с массива -----------
-  var Load = function (data) {
+  var onMainWizardCoat = window.debounce(function () {
+    mainWizardCoat.style.fill = colorCoat[makeRandomValue(colorCoat)];
+    update();
+  });
+
+  var onMainWizarEyes = window.debounce(function () {
+    mainWizarEyes.style.fill = colorEyes[makeRandomValue(colorEyes)];
+    update();
+  });
+
+  var onMainfireball = window.debounce(function () {
+    mainfireball.style.backgroundColor = fireballColors[makeRandomValue(fireballColors)];
+    mainfireballInput.setAttribute('value', fireballColors[makeRandomValue(fireballColors)]); // setTimeout(function () {
+    update();
+  });
+
+  mainWizardCoat.addEventListener('click', onMainWizardCoat);
+
+  mainWizarEyes.addEventListener('click', onMainWizarEyes);
+
+  mainfireball.addEventListener('click', onMainfireball);
+
+  //  получение оценки совпадения
+
+  var levelOfSimilarity = function (data) {
+    for (var i = 0; i < data.length; i++) {
+      data[i].index = 0;
+      if (mainWizardCoat.style.fill === data[i].colorCoat) {
+        data[i].index = 5;
+      }
+      if (mainWizarEyes.style.fill === data[i].colorEyes) {
+        data[i].index += 2;
+      }
+      if (mainfireballInput.value === data[i].colorFireball) {
+        data[i].index += 1;
+      }
+    }
+  };
+
+  //  очистка списка  похожих волшебников
+
+  var clearListWisards = function () {
+    if (blockSetuSimilarList.children.length > 0) {
+      var oldWizards = document.querySelectorAll('.setup-similar-item');
+      for (var i = 0; i < oldWizards.length; i++) {
+        blockSetuSimilarList.removeChild(oldWizards[i]);
+      }
+    }
+  };
+
+  // создание заданного списка похожих волшебников
+
+  var createListWisards = function (data, value) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < value; i++) {
       fragment.appendChild(renderWizard(data[i]));
     }
     blockSetuSimilarList.appendChild(fragment);
+  };
+
+  var update = function () {
+    levelOfSimilarity(wizards);
+    wizards.sort(function (a, b) {
+      return b.index - a.index;
+    });
+    clearListWisards();
+    createListWisards(wizards, 4);
+  };
+
+  //  ---------- конструирование блока  по данным и критериям  -----------
+
+  var Load = function (data) {
+    wizards = data.slice();
+    update();
     blockSetuSimilar.classList.remove('hidden');
   };
 
   window.backend.load('https://js.dump.academy/code-and-magick/data', Load);
-
-
-  mainWizardCoat.addEventListener('click', function () {
-    mainWizardCoat.style.fill = colorCoat[makeRandomValue(colorCoat)];
-  });
-
-  mainWizarEyes.addEventListener('click', function () {
-    mainWizarEyes.style.fill = colorEyes[makeRandomValue(colorEyes)];
-  });
-
-  mainfireball.addEventListener('click', function () {
-    mainfireball.style.backgroundColor = fireballColors[makeRandomValue(fireballColors)];
-    mainfireballInput.setAttribute('value', fireballColors[makeRandomValue(fireballColors)]);
-  });
 })();
