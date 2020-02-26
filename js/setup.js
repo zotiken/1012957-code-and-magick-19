@@ -52,8 +52,6 @@ blocksetupClose.addEventListener('keydown', function (evt) {
     closeBlock();
   }
 });
-
-
 var onUnload = function () {
   WizardForm.classList.add('hidden');
 };

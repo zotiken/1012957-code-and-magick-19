@@ -1,6 +1,4 @@
 'use strict';
-
-
 (function () {
 
   var blockSetuSimilar = document.querySelector('.setup-similar');
@@ -35,7 +33,6 @@
   // ---
 
   //  --------------- создание массива описания  персонажей -------------
-
   // var wizardGeneretionCharacteristics = function (number) {
   //   for (var i = 0; i < number; i++) {
   //     wizards.push({
@@ -68,7 +65,6 @@
     return wizardElement;
   };
   //  ---------- конструирование блока  по данным с массива -----------
-
   var Load = function (data) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < 4; i++) {
